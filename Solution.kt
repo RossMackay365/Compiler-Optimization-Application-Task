@@ -75,41 +75,6 @@ import java.util.LinkedList
 import java.util.Scanner
 import java.io.File
 
-// Input Data Class
-data class Input(
-    val S: Int,
-    val unload: IntArray,
-    val load: IntArray,
-    val graph: Array<MutableList<Int>>,
-    val s0: Int
-)
-
-// Reads Input from File, Returns Input Object
-fun readInput(scanner: Scanner): Input {
-    val (S, T) = scanner.nextLine().trim().split(",").map { it.toInt() }
-
-    val unload = IntArray(S)
-    val load = IntArray(S)
-
-    repeat(S) {
-        val (s, unloadType, loadType) = scanner.nextLine().trim().split(",").map { it.toInt() }
-        unload[s] = unloadType
-        load[s] = loadType
-    }
-
-    // Construct Graph Holding List of Neighbours for Each Station
-    val graph = Array(S) { mutableListOf<Int>() }
-    repeat(T) {
-        val (from, to) = scanner.nextLine().trim().split(",").map { it.toInt() }
-        graph[from].add(to)
-    }
-
-    val s0 = scanner.nextLine().trim().toInt()
-
-    return Input(S, unload, load, graph, s0)
-}
-
-
 // Solve Method
 fun solve(input: Input): Array<MutableSet<Int>> {
     // Retrieve Input Variables
@@ -167,4 +132,38 @@ fun main() {
     for (v in 0 until input.S) {
         println("$v: ${possible[v].sorted()}")
     }
+}
+
+// Input Data Class
+data class Input(
+    val S: Int,
+    val unload: IntArray,
+    val load: IntArray,
+    val graph: Array<MutableList<Int>>,
+    val s0: Int
+)
+
+// Reads Input from File, Returns Input Object
+fun readInput(scanner: Scanner): Input {
+    val (S, T) = scanner.nextLine().trim().split(",").map { it.toInt() }
+
+    val unload = IntArray(S)
+    val load = IntArray(S)
+
+    repeat(S) {
+        val (s, unloadType, loadType) = scanner.nextLine().trim().split(",").map { it.toInt() }
+        unload[s] = unloadType
+        load[s] = loadType
+    }
+
+    // Construct Graph Holding List of Neighbours for Each Station
+    val graph = Array(S) { mutableListOf<Int>() }
+    repeat(T) {
+        val (from, to) = scanner.nextLine().trim().split(",").map { it.toInt() }
+        graph[from].add(to)
+    }
+
+    val s0 = scanner.nextLine().trim().toInt()
+
+    return Input(S, unload, load, graph, s0)
 }
